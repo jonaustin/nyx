@@ -1,0 +1,103 @@
+.column {
+  @extend .col-md-6;
+  @extend .text-center;
+}
+
+.form {
+  @extend .col-md-6;
+}
+
+.form-centered {
+  @extend .col-md-6;
+  @extend .text-center;
+}
+
+.submit {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-lg;
+}
+
+main {
+  @extend .container;
+  padding-bottom: 80px;
+  margin-top: 90px; // accommodate the navbar
+}
+
+section {
+  @extend .row;
+  margin-top: 20px;
+}
+
+.nav-tabs.right-tabs {
+  li {
+      float:none;
+      display:inline-block;
+  }
+
+  text-align: right;
+}
+
+// Styles for Devise views using Bootstrap
+.authform {
+  padding-top: 30px;
+  max-width: 320px;
+  margin: 0 auto;
+
+  form {
+    @extend .well;
+    @extend .well-lg;
+  }
+
+  .right {
+    float: right !important;
+  }
+
+  .button {
+    @extend .btn;
+    @extend .btn-primary;
+  }
+
+  fieldset {
+    @extend .well;
+  }
+
+  .secondary-links {
+    padding-top: 20px; 
+    text-align: center;
+  }
+
+  &.wide {
+    max-width: 405px;
+  }
+
+  #user_remember_me {
+    margin-left: 0;
+  }
+
+  label[for=user_remember_me] {
+    padding-left: 10px;
+  }
+}
+
+#error_explanation {
+  @extend .alert;
+  @extend .alert-danger;
+}
+
+#error_explanation h2 {
+  font-size: 16px;
+}
+
+.button-xs {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-xs;
+}
+
+ul.checkboxes {
+  margin: 0;
+  list-style: none;
+  float: left;
+}
+

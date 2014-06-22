@@ -1,0 +1,28 @@
+@import "bootstrap";
+
+/* Flash classes that can be utilized in both JS assets and rails views (rather
+ * than having a helper method that maps flash types to bootstrap classes */
+.flash-success {
+  @extend .alert-success;
+}
+
+.flash-error {
+  @extend .alert-danger;
+}
+
+.flash-alert {
+  // Note: flash[:alert] is used in a lot of places in the controllers where
+  // flash[:error] should perhaps be used.
+  @extend .alert-danger
+  /*@extend .alert-warning;*/
+}
+
+.flash-notice {
+  @extend .alert-info;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: #428bca;
+}
