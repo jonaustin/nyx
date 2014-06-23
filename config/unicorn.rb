@@ -1,5 +1,5 @@
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
-timeout 15
+timeout 15000 # long timeout for now to debug in dev
 preload_app true
 
 before_fork do |server, worker|
