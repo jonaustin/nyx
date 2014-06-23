@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
-ruby '2.1.1'
+ruby '2.1.2'
 
 gem 'rails',             '4.1.1'
 gem 'pg',                '~> 0.17'
@@ -25,6 +25,10 @@ gem 'rails-assets-lodash',                 '~> 2.4.1'
 gem 'angular_rails_csrf',                  '~> 1.0'
 gem 'rails-assets-angular-loading-bar'
 gem 'rails-assets-angular-resource'
+
+group :production do
+  gem 'rails_12factor'
+end
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
