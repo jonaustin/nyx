@@ -15,6 +15,7 @@ gem 'draper',            '~> 1.3'
 gem 'devise',            '~> 3.2'
 gem 'therubyracer',      '~> 0.12', platforms: :ruby
 gem 'echonest-ruby-api', github: 'jonaustin/echonest-ruby-api'
+gem 'unicorn'
 
 # causes issues with angularjs. For a fix see: https://shellycloud.com/blog/2013/10/how-to-integrate-angularjs-with-rails-4
 #gem 'turbolinks'              
