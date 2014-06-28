@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   end
 
   def playlist
-    @spotify_uris = Playlist.new.taste_playlist_from_tracks
+    @spotify_uris = Playlist.new.spotify_playlist_from_tracks
     render :home
   end
 
