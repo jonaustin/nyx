@@ -2,10 +2,9 @@ require 'rockstar'
 
 class Lastfm
   def initialize
-    config = YAML.load_file(Rails.root.join('config/api_keys.yml'))
     Rockstar.lastfm = {
-      api_key: config['lastfm_key'],
-      api_secret: config['lastfm_secret']
+      api_key:    ENV['LASTFM_KEY'],
+      api_secret: ENV['LASTFM_SECRET']
     }
   end
 

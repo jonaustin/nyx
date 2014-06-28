@@ -7,5 +7,4 @@ class PagesController < ApplicationController
     @spotify_uris = Playlist.new.spotify_playlist_from_tracks
     render :home
   end
-
 end

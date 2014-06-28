@@ -126,6 +126,9 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     font-awesome-sass (4.1.0)
       sass (~> 3.2)
     formatador (0.2.5)
@@ -336,6 +339,7 @@ DEPENDENCIES
   draper (~> 1.3)
   echowrap (= 0.1.3)
   factory_girl_rails
+  figaro
   font-awesome-sass (~> 4.1)
   growl
   guard-livereload
