@@ -1,1 +1,12 @@
-echonest_api_key: "FILL_IN" # https://developer.echonest.com/account/profile
+# http://www.last.fm/api/accounts
+lastfm_key: ""
+lastfm_secret: ""
+
+# Normal spotify username and password
+spotify_username: ""
+spotify_password: ""
+
+# https://developer.echonest.com/account/profile
+echonest_api_key: ""
+echonest_consumer_key: ""
+echonest_shared_secret: ""

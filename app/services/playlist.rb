@@ -1,32 +1,33 @@
+require 'echowrap'
+
 class Playlist
   def initialize
-    @api = Rails.application.config.echonest_api_key
-    @song = Echonest::Song.new(@api)
+    @en = Echowrap
   end
 
   def hottt
-    songs = @song.search(bucket: ['id:spotify', 'tracks', 'song_hotttnesss_rank'], 
-                        sort: ['song_hotttnesss-desc'], 
-                        results:50)
-    us = {}
-    songs.each do |song|
-      key = "#{song[:artist_name]} - #{song[:title]}"
-      us[key] = song unless song[:tracks].empty?
+    Rails.cache.fetch('en-hottt', expires_in: 1.day) do
+      en_songs = @en.song_search(bucket: ['id:spotify', 'tracks', 'song_hotttnesss_rank'], 
+                              sort: ['song_hotttnesss-desc'], 
+                              results:50)
+      en_songs.each_with_object([]) do |song, spotify_uris|
+        next if song.tracks.empty?
+        spotify_uris << song.tracks.first.foreign_id.split(':')[-1]
+      end
     end
-    spotify_uris = []
-    us.each {|title, song| spotify_uris << song[:tracks].first[:foreign_id].split(':')[-1] }
-    spotify_uris
   end
 
-  def taste_playlist_from_tracks
-    spotify_uris = tracks_hash.each_with_object([]) do |t, arr|
-      results = @song.search(bucket: ['id:spotify', 'tracks'],
-                          title: t[:title],
-                          artist: t[:artist],
-                         results: 20)
-      tracks = results.find{|h| !h[:tracks].empty?}
-      spotify_uri = tracks[:tracks].first[:foreign_id].split(':')[-1] unless tracks.nil? || tracks.empty?
-      arr << spotify_uri unless spotify_uri.nil?
+  def taste_playlist_from_tracks(tracks=tracks_hash)
+    Rails.cache.fetch("taste_playlist_from_tracks-#{tracks.to_json}", expires_in: 10.days) do
+      tracks_hash.each_with_object([]) do |t, arr|
+        results = @en.song_search(bucket: ['id:spotify', 'tracks'],
+                                  title: t[:title],
+                                  artist: t[:artist],
+                                  results: 20)
+        result = results.find{|h| !h.tracks.empty?}
+        spotify_uri = result.tracks.first.foreign_id.split(':')[-1] unless results.nil? || results.empty?
+        arr << spotify_uri unless spotify_uri.nil?
+      end
     end
   end
 
