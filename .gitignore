@@ -18,3 +18,5 @@
 
 # ignore secrets
 /config/api_keys.yml
+
+/ideas

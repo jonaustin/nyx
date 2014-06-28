@@ -1,21 +1,20 @@
-%nav.navbar.navbar-default.navbar-fixed-top
-  .navbar.navbar-inverse.navbar-fixed-top{role:'navigation'}
-    .container
-      .navbar-header
-        %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
-          %span.sr-only Toggle navigation
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        = link_to 'Nyx', root_path, class: 'navbar-brand'
-      .collapse.navbar-collapse
-        %ul.nav.navbar-nav
-          %li{class: "#{controller_name == 'pages' && action_name == 'home' ? 'active' : ''}"}
-            = link_to 'Home', root_path
-        %ul.nav.navbar-nav.navbar-right
-          -#- if user_signed_in?
-            -#%li= link_to 'Profile', profile_user_path
-            -#%li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
-          -#- else
-            -#%li= link_to 'Login', new_user_session_path
-            -#%li= link_to 'Sign up', new_user_registration_path
+%nav.navbar.navbar-default.navbar-fixed-top.navbar-inverse{role:'navigation'}
+  .container
+    .navbar-header
+      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to 'Nyx', root_path, class: 'navbar-brand'
+    .collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li{class: "#{controller_name == 'pages' && action_name == 'home' ? 'active' : ''}"}
+          = link_to 'Home', root_path
+      %ul.nav.navbar-nav.navbar-right
+        -#- if user_signed_in?
+          -#%li= link_to 'Profile', profile_user_path
+          -#%li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
+        -#- else
+          -#%li= link_to 'Login', new_user_session_path
+          -#%li= link_to 'Sign up', new_user_registration_path
