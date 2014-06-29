@@ -50,6 +50,26 @@ class Playlist
     end
   end
 
+  def echonest_tracks_to_hash(tracks)
+    tracks.map do |ent|
+      {title: ent.title, artist: ent.artist_name}
+    end
+  end
+
+  # returns 
+  # [{"item_id": "creep",
+  # "artist_name": "Radiohead",
+  # "song_name": "Creep"},...]
+  def taste_data_from_tracks_hash(tracks)
+    tracks.map do |track|
+      { action: 'update',
+        item: { item_id:     "#{track[:title]}-#{track[:artist]}",
+                artist_name: track[:artist],
+                song_name:   track[:title] }
+      }
+    end
+  end
+
 
   private
 
