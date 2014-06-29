@@ -54,7 +54,7 @@ class Playlist
   private
 
   def fetch(options)
-    Rails.cache.fetch("fetch-track-#{options.to_json}", expires_in: 10.days) do
+    Rails.cache.fetch("fetch-track-#{options.to_json}", expires_in: 100.days) do
       @en.song_search(options)
     end
   end

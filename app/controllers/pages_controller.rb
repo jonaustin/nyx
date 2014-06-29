@@ -1,11 +1,16 @@
 class PagesController < ApplicationController
   def home
+    redirect_to '/pages/hottt'
+  end
+
+  def hottt
     @spotify_uris = Playlist.new.hottt
+    render :playlist
   end
 
   def playlist
     @spotify_uris = Playlist.new.spotify_playlist_from_tracks
-    render :home
+    render :playlist
   end
 
   def top_tracks
@@ -14,6 +19,6 @@ class PagesController < ApplicationController
     playlist = Playlist.new
     track_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
     @spotify_uris = playlist.spotify_playlist_from_tracks(track_hash)
-    render :home
+    render :playlist
   end
 end
