@@ -11,7 +11,7 @@ class Lastfm
   def top_weekly_tracks(user)
     Rails.cache.fetch("rockstar-#{user}", expires_in: 1.day) do
       user = Rockstar::User.new(user)
-      user.weekly_track_chart[10]
+      user.weekly_track_chart[0..10]
     end
   end
 end

@@ -27,8 +27,9 @@ class Playlist
     end
   end
 
+  # tracks = [{title: 'title', artist: 'artist'},...]
   def spotify_playlist_from_tracks(tracks=tracks_hash)
-    tracks_hash.each_with_object([]) do |t, spotify_uris|
+    tracks.each_with_object([]) do |t, spotify_uris|
       results = fetch(bucket: ['id:spotify', 'tracks'],
                             title: t[:title],
                             artist: t[:artist],
@@ -36,6 +37,16 @@ class Playlist
                             limit: true)
       en_song_with_tracks = any_tracks?(results) || next
       spotify_uris << spotify_uri_from_echonest_song(en_song_with_tracks)
+    end
+  end
+
+  # {title: 'title', artist: 'artist'}
+  def last_fm_tracks_to_hash(tracks)
+    # cannot lookup from musicbrainz track id:
+    # http://developer.echonest.com/forums/thread/816
+    # Musicbrainz song IDs are not yet supported, only artist IDs.
+    tracks.map do |lft|
+      {title: lft.name, artist: lft.artist}
     end
   end
 
