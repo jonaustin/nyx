@@ -14,8 +14,10 @@ class PagesController < ApplicationController
   end
 
   def top_tracks
-    user = params[:user] || 'echowarpt'
-    lastfm_tracks = Lastfm.new.top_weekly_tracks(user)
+    params[:user]   ||= 'echowarpt'
+    params[:limit]  ||= 100
+    params[:period] ||= '7day'
+    lastfm_tracks = Lfm.new.top_tracks(params)
     playlist = Playlist.new
     tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
     @spotify_uris = playlist.spotify_playlist_from_tracks(tracks_hash)
@@ -34,7 +36,6 @@ class PagesController < ApplicationController
     taste_id = taste_profile.id
     Rails.logger.info('TASTE ID: ' + taste_id)
     Echowrap.taste_profile_update(id: taste_id, data: taste_json)
-    binding.pry 
     en_songs = Echowrap.playlist_static(seed_catalog: taste_id, type: 'catalog-radio', results: 50)
     tracks_hash = playlist.echonest_tracks_to_hash(en_songs)
     @spotify_uris = playlist.spotify_playlist_from_tracks(tracks_hash)

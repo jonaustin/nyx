@@ -30,13 +30,15 @@ class Playlist
   # tracks = [{title: 'title', artist: 'artist'},...]
   def spotify_playlist_from_tracks(tracks=tracks_hash)
     tracks.each_with_object([]) do |t, spotify_uris|
-      results = fetch(bucket: ['id:spotify', 'tracks'],
+      songs = fetch(bucket: ['id:spotify', 'tracks'],
                             title: t[:title],
                             artist: t[:artist],
                             results: 20,
                             limit: true)
-      en_song_with_tracks = any_tracks?(results) || next
-      spotify_uris << spotify_uri_from_echonest_song(en_song_with_tracks)
+      if any_tracks?(songs)
+        best_song = best_song_from_en(songs)
+        spotify_uris << spotify_uri_from_echonest_song(best_song)
+      end
     end
   end
 
@@ -46,7 +48,7 @@ class Playlist
     # http://developer.echonest.com/forums/thread/816
     # Musicbrainz song IDs are not yet supported, only artist IDs.
     tracks.map do |lft|
-      {title: lft.name, artist: lft.artist}
+      {title: lft['name'], artist: lft['artist']['name']}
     end
   end
 
@@ -56,7 +58,7 @@ class Playlist
     end
   end
 
-  # returns 
+  # returns
   # [{"item_id": "creep",
   # "artist_name": "Radiohead",
   # "song_name": "Creep"},...]
@@ -77,6 +79,29 @@ class Playlist
     Rails.cache.fetch("fetch-track-#{options.to_json}", expires_in: 100.days) do
       @en.song_search(options)
     end
+  end
+
+  # Echonest returns a list of songs that match a given artist/title
+  # Each of these songs reference multiple spotify track ids (i.e. same song,
+  # different album and such (i believe))
+  # There is no way of telling for sure which track is 'best'
+  # So assume the one with the most tracks is the best - e.g. the one that
+  # appears the most is probably the most popular version so probably the one
+  # we want.
+  # This also mostly fixes the issue of tracks that aren't available for
+  # whatever reason (i.e. not available in our territory) since there is no way
+  # to tell if a spotify id echonest gives us is actually available without
+  # directly querying spotify.
+  def best_song_from_en(songs)
+    best_song = songs.first
+    songs.each do |s|
+      best_song = if s.tracks.size > best_song.tracks.size
+                     s
+                   else
+                     best_song
+                   end
+    end
+    best_song
   end
 
   def any_tracks?(search_results)
