@@ -16,9 +16,9 @@
         %li{class: "#{controller_name == 'pages' && action_name == 'top_tracks' ? 'active' : ''}"}
           = link_to 'Top Tracks', '/pages/top_tracks'
       %ul.nav.navbar-nav.navbar-right
-        -#- if user_signed_in?
-          -#%li= link_to 'Profile', profile_user_path
-          -#%li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
-        -#- else
-          -#%li= link_to 'Login', new_user_session_path
-          -#%li= link_to 'Sign up', new_user_registration_path
+        - if user_signed_in?
+          %li= link_to 'Profile', profile_user_path
+          %li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
+        - else
+          %li= link_to 'Login', new_user_session_path
+          %li= link_to 'Sign up', new_user_registration_path

@@ -14,7 +14,7 @@ class PagesController < ApplicationController
   end
 
   def top_tracks
-    params[:user]   ||= 'echowarpt'
+    params[:user]   ||= current_user.lastfm_username
     params[:start]  ||= 0 
     params[:limit]  ||= 90 
     params[:period] ||= '7day'
@@ -27,7 +27,7 @@ class PagesController < ApplicationController
 
   def taste_last_week
     # dry
-    user = params[:user] || 'echowarpt'
+    user = params[:user] || current_user.lastfm_username
     lastfm_tracks = Lastfm.new.top_weekly_tracks(user)
     playlist = Playlist.new
     tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)

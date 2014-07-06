@@ -1,0 +1,30 @@
+.authform
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
+    %h3 Log in
+    = devise_error_messages!
+    .form-group
+      - if devise_mapping.registerable?
+        = link_to 'Sign up', new_registration_path(resource_name), class: 'right'
+      = f.label :email
+      = f.email_field :email, :autofocus => true, class: 'form-control'
+    .form-group
+      - if devise_mapping.recoverable?
+        = link_to "Forgot password?", new_password_path(resource_name), class: 'right'
+      = f.label :password
+      = f.password_field :password, class: 'form-control'
+    .pull-left
+      - if devise_mapping.rememberable?
+        .checkbox
+          %label
+            = f.check_box :remember_me
+            Remember me
+    .pull-right
+      = f.submit 'Log in', :class => 'button right'
+    .clearfix
+    .secondary-links
+      - if devise_mapping.confirmable? && controller_name != 'confirmations'
+        #confirmation-link
+          = link_to "Didn't receive confirmation email?", new_confirmation_path(resource_name)
+      - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
+        #unlock-link
+          = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name)

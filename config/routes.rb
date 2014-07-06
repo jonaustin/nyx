@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
+  #mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   root 'pages#home'
   get 'pages/:action' => 'pages'
+
+  devise_for :users
+  # Singular user resources - no one may modify anyone else's profile
+  resource :user, only: [:update] do
+    get :profile
+    patch 'update_password'
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
