@@ -15,9 +15,10 @@ class PagesController < ApplicationController
 
   def top_tracks
     params[:user]   ||= 'echowarpt'
-    params[:limit]  ||= 100
+    params[:start]  ||= 0 
+    params[:limit]  ||= 90 
     params[:period] ||= '7day'
-    lastfm_tracks = Lfm.new.top_tracks(params)
+    lastfm_tracks = Lfm.new.top_tracks(echonest_params)
     playlist = Playlist.new
     tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
     @spotify_uris = playlist.spotify_playlist_from_tracks(tracks_hash)
@@ -40,5 +41,9 @@ class PagesController < ApplicationController
     tracks_hash = playlist.echonest_tracks_to_hash(en_songs)
     @spotify_uris = playlist.spotify_playlist_from_tracks(tracks_hash)
     render :playlist
+  end
+
+  def echonest_params
+    params.permit(:user, :start, :limit, :period)
   end
 end
