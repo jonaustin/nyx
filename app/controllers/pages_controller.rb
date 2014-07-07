@@ -4,12 +4,12 @@ class PagesController < ApplicationController
   end
 
   def hottt
-    @spotify_uris = Playlist.new.hottt
+    @spotify_uris = PlaylistService.new.hottt
     render :playlist
   end
 
   def playlist
-    @spotify_uris = Playlist.new.spotify_playlist_from_tracks
+    @spotify_uris = PlaylistService.new.spotify_playlist_from_tracks
     render :playlist
   end
 
@@ -19,7 +19,7 @@ class PagesController < ApplicationController
     params[:limit]  ||= 90 
     params[:period] ||= '7day'
     lastfm_tracks = Lfm.new.top_tracks(echonest_params)
-    playlist = Playlist.new
+    playlist = PlaylistService.new
     tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
     @spotify_uris = playlist.spotify_playlist_from_tracks(tracks_hash)
     render :playlist
@@ -29,7 +29,7 @@ class PagesController < ApplicationController
     # dry
     user = params[:user] || current_user.lastfm_username
     lastfm_tracks = Lastfm.new.top_weekly_tracks(user)
-    playlist = Playlist.new
+    playlist = PlaylistService.new
     tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
     taste_json = playlist.taste_data_from_tracks_hash(tracks_hash).to_json
 
