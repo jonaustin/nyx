@@ -11,7 +11,6 @@ gem 'jquery-rails',      '~> 3.1'
 gem 'haml-rails',        '~> 0.5'
 gem 'bootstrap-sass',    '~> 3.1'
 gem 'font-awesome-sass', '~> 4.1'
-gem 'draper',            '~> 1.3'
 gem 'devise',            '~> 3.2'
 gem 'therubyracer',      '~> 0.12', platforms: :ruby
 gem 'echowrap',          '~> 0.1'
