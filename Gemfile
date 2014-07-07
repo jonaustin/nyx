@@ -22,12 +22,13 @@ gem 'figaro'
 # causes issues with angularjs. For a fix see: https://shellycloud.com/blog/2013/10/how-to-integrate-angularjs-with-rails-4
 #gem 'turbolinks'              
 
-gem 'ngmin-rails',                         '~> 0.4.0'
-gem 'rails-assets-lodash',                 '~> 2.4.1'
-#gem 'rails-assets-angular-local-storage',  '~> 0.0.4'
-gem 'angular_rails_csrf',                  '~> 1.0'
+gem 'ngannotate-rails'
+gem 'angular_rails_csrf'
 gem 'rails-assets-angular-loading-bar'
 gem 'rails-assets-angular-resource'
+gem 'rails-assets-angular-ui-bootstrap-bower'
+gem 'rails-assets-lodash',             '~> 2.4'
+gem 'rails-assets-angular-ui-select2', '~> 0.0.5'
 
 group :production do
   gem 'rails_12factor'

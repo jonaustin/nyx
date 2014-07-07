@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   #mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+  namespace :api, defaults: {format: :json} do
+    resources :playlists, only: [:index] do
+      resources :tracks, only: [:index, :create, :update :destroy]
+    end
+  end
+
   root 'pages#home'
   get 'pages/:action' => 'pages'
 
