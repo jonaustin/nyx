@@ -1,6 +1,7 @@
 class Api::PlaylistsController < Api::BaseController
   before_action :set_playlist, only: [:show, :edit, :update, :destroy]
-  respond_to :json
+  respond_to :json, except: [:playlist, :template]
+  respond_to :html, only:   [:playlist, :template]
 
   def index
     respond_with current_user.playlists
@@ -28,6 +29,13 @@ class Api::PlaylistsController < Api::BaseController
     name = @playlist.name
     @playlist.destroy
     respond_with "Playlist #{name} destroyed", status: :success
+  end
+
+  def hottt
+    respond_with PlaylistService.new.hottt
+  end
+
+  def playlist
   end
 
   # $routeProvider.when '/something', templateUrl: '/playlists/something.html', controller: 'SomethingController'

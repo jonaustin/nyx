@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   mount Peek::Railtie => '/peek'
 
   namespace :api, defaults: {format: :json} do
+    resource :playlist, only: [] do
+      get :playlist, defaults: {format: :html}
+      get :hottt
+    end
     resources :playlists, only: [:index, :create, :update, :destroy] do
       resources :tracks, only: [:index, :create, :update, :destroy]
     end

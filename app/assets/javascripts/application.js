@@ -16,11 +16,6 @@
 //= require jquery_ujs
 //= require lodash
 //= require bootstrap
-//= require angular
-//= require angular-resource
-//= require angular-loading-bar
-//= require angular-ui-select2/select2
-//= require angular-ui-bootstrap-bower
 //= require peek
 //= require peek/views/performance_bar
 //= require_tree .

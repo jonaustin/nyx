@@ -3,11 +3,6 @@ class PagesController < ApplicationController
     redirect_to '/pages/hottt'
   end
 
-  def hottt
-    @spotify_uris = PlaylistService.new.hottt
-    render :playlist
-  end
-
   def playlist
     @spotify_uris = PlaylistService.new.spotify_playlist_from_tracks
     render :playlist
