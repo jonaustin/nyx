@@ -19,9 +19,19 @@ app.config ($httpProvider) ->
 
 app.config ($routeProvider, $locationProvider) ->
   #$locationProvider.html5Mode true
-  $routeProvider.when '/', templateUrl: '/api/playlists/hottt.html', controller: 'PlaylistController' 
-  #$routeProvider.when '/', redirectTo: '/hottt
-  #$routeProvider.when '/hottt', templateUrl: '/playlists/hottt.html', controller: 'PlaylistController'
+  $routeProvider
+    .when('/',
+          {
+            redirectTo: '/hottt'
+          })
+    .when('/hottt',
+          {
+            templateUrl: '/api/playlists/hottt.html',
+            controller: 'PlaylistController'
+          })
+    .otherwise({
+      redirectTo: '/hottt'
+    })
 
 app.factory("Playlist", ($resource) ->
   $resource('/api/playlists/:id.json', {id: '@id'})
