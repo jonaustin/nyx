@@ -43,6 +43,7 @@ GEM
     angular_rails_csrf (1.0.1)
       rails (>= 3, < 5)
     arel (5.0.1.20140414130214)
+    atomic (1.1.16)
     bcrypt (3.1.7)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
@@ -169,7 +170,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.6.0)
-    minitest (5.3.5)
+    minitest (5.4.0)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -182,6 +183,17 @@ GEM
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
     orm_adapter (0.5.0)
+    peek (0.1.8)
+      atomic (>= 1.0.0)
+      rails (>= 3.0.0)
+    peek-git (1.0.2)
+      peek
+    peek-performance_bar (1.1.4)
+      peek (>= 0.1.0)
+    peek-pg (1.1.0)
+      atomic (>= 1.0.0)
+      peek
+      pg
     pg (0.17.1)
     poltergeist (1.5.1)
       capybara (~> 2.1)
@@ -351,6 +363,10 @@ DEPENDENCIES
   launchy
   letter_opener
   ngannotate-rails
+  peek
+  peek-git
+  peek-performance_bar
+  peek-pg
   pg (~> 0.17)
   poltergeist
   pry-byebug

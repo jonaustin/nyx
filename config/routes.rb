@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   #mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+  mount Peek::Railtie => '/peek'
+
   namespace :api, defaults: {format: :json} do
     resources :playlists, only: [:index, :create, :update, :destroy] do
       resources :tracks, only: [:index, :create, :update, :destroy]
