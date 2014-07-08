@@ -1,5 +1,6 @@
 #= require angular
 #= require angular-resource
+#= require angular-route
 #= require angular-loading-bar
 #= require angular-ui-bootstrap-bower
 # require angular-ui-select2/select2
@@ -8,8 +9,19 @@ app = angular.module("playlistApp",
                     [
                      'angular-loading-bar'
                      'ngResource'
+                     'ngRoute'
                      'ui.bootstrap'
                     ])
+
+app.config ($httpProvider) ->
+  authToken = $("meta[name=\"csrf-token\"]").attr("content")
+  $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = authToken
+
+app.config ($routeProvider, $locationProvider) ->
+  #$locationProvider.html5Mode true
+  $routeProvider.when '/', templateUrl: '/api/playlists/hottt.html', controller: 'PlaylistController' 
+  #$routeProvider.when '/', redirectTo: '/hottt
+  #$routeProvider.when '/hottt', templateUrl: '/playlists/hottt.html', controller: 'PlaylistController'
 
 app.factory("Playlist", ($resource) ->
   $resource('/api/playlists/:id.json', {id: '@id'})
