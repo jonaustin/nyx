@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :playlists, only: [:index, :create, :update, :destroy] do
       resources :tracks, only: [:index, :create, :update, :destroy]
     end
+    get '/playlists/:path.html' => 'playlists#template', :constraints => { :path => /.+/  }, defaults: {format: :html}
   end
 
   root 'pages#home'
