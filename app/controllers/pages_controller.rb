@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def home
-    redirect_to '/pages/hottt'
+    render '/api/playlists/playlist'
   end
 
   def playlist

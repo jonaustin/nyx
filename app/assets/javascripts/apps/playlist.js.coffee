@@ -26,8 +26,13 @@ app.config ($routeProvider, $locationProvider) ->
           })
     .when('/hottt',
           {
-            templateUrl: '/api/playlists/hottt.html',
-            controller: 'PlaylistController'
+            templateUrl: '/api/playlists/playlist_embed.html',
+            controller: 'HotttPlaylistController'
+          })
+    .when('/top-tracks',
+          {
+            templateUrl: '/api/playlists/playlist_embed.html',
+            controller: 'TopTracksPlaylistController'
           })
     .otherwise({
       redirectTo: '/hottt'
@@ -41,6 +46,10 @@ app.factory("PlaylistService", ($http, DataModel) ->
   {
     hottt: ->
       $http.get('/api/playlist/hottt')
+        .success (data) ->
+          DataModel.data.spotify_ids = data.data
+    topTracks: ->
+      $http.get('/api/playlist/top_tracks') #FIXME send params (routeParams?)
         .success (data) ->
           DataModel.data.spotify_ids = data.data
   }
@@ -57,12 +66,19 @@ app.factory("DataModel", ->
 
 )
 
-app.controller("PlaylistController", ($scope, $sce, DataModel, PlaylistService) ->
-  window.PLAYLIST = $scope
+app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, DataModel, PlaylistService) ->
+  window.HOTTT = $scope
   $scope.data = DataModel.data
   PlaylistService.hottt().then (data) ->
     $scope.data.spotify_ids = data.data
     $scope.data.spotify_embed_url = "https://embed.spotify.com/?uri=spotify:trackset:" + $scope.data.name + ':' + $scope.data.spotify_ids
     $scope.data.spotify_embed_url = $sce.trustAsResourceUrl($scope.data.spotify_embed_url)
 
-)
+
+app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataModel, PlaylistService) ->
+  window.TOPTRACKS = $scope
+  $scope.data = DataModel.data
+  PlaylistService.topTracks().then (data) ->
+    $scope.data.spotify_ids = data.data
+    $scope.data.spotify_embed_url = "https://embed.spotify.com/?uri=spotify:trackset:" + $scope.data.name + ':' + $scope.data.spotify_ids
+    $scope.data.spotify_embed_url = $sce.trustAsResourceUrl($scope.data.spotify_embed_url)

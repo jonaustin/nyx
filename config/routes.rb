@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resource :playlist, only: [] do
       get :playlist, defaults: {format: :html}
       get :hottt
+      get :top_tracks
     end
     resources :playlists, only: [:index, :create, :update, :destroy] do
       resources :tracks, only: [:index, :create, :update, :destroy]
