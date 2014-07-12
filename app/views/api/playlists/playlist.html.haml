@@ -3,7 +3,3 @@
 
 .container.ng-cloak{'ng-app' => 'playlistApp'}
   %ng-view
-
--#.container.ng-cloak{'ng-app' => 'playlistApp', ng_controller: 'PlaylistController'}
-  .text-center{ng_if: 'data.spotify_ids'}
-    %iframe{ id: 'spotify_playlist', allowtransparency: 'true', frameborder: '0', width: '500', height: '500', src: "{{data.spotify_embed_url}}" }

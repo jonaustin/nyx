@@ -14,7 +14,7 @@ app = angular.module("playlistApp",
                     ])
 
 app.config ($httpProvider) ->
-  authToken = $("meta[name=\"csrf-token\"]").attr("content")
+  authToken = $("meta[name='csrf-token']").attr("content")
   $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = authToken
 
 app.config ($routeProvider, $locationProvider) ->
@@ -38,47 +38,41 @@ app.config ($routeProvider, $locationProvider) ->
       redirectTo: '/hottt'
     })
 
-app.factory("Playlist", ($resource) ->
+app.factory "Playlist", ($resource) ->
   $resource('/api/playlists/:id.json', {id: '@id'})
-)
 
-app.factory("PlaylistService", ($http, DataModel) ->
+app.factory "PlaylistService", ($http) ->
   {
     hottt: ->
       $http.get('/api/playlist/hottt')
-        .success (data) ->
-          DataModel.data.spotify_ids = data.data
+        .success (response) ->
+          response.data
     topTracks: ->
       $http.get('/api/playlist/top_tracks') #FIXME send params (routeParams?)
-        .success (data) ->
-          DataModel.data.spotify_ids = data.data
+        .success (response) ->
+          response.data
   }
-)
 
-app.factory("DataModel", ->
+app.factory "SpotifyService", ->
   {
-    data: {
-      name: ''
-      #tracks: []
-      spotify_ids: []
-    }
+    generateSpotifyEmbedUrl: (spotifyIds, playlistName) ->
+      baseUrl = "https://embed.spotify.com/?uri=spotify:trackset:"
+      baseUrl + playlistName + ':' + spotifyIds
   }
 
-)
-
-app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, DataModel, PlaylistService) ->
+app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, PlaylistService, SpotifyService) ->
   window.HOTTT = $scope
-  $scope.data = DataModel.data
-  PlaylistService.hottt().then (data) ->
-    $scope.data.spotify_ids = data.data
-    $scope.data.spotify_embed_url = "https://embed.spotify.com/?uri=spotify:trackset:" + $scope.data.name + ':' + $scope.data.spotify_ids
-    $scope.data.spotify_embed_url = $sce.trustAsResourceUrl($scope.data.spotify_embed_url)
+  $scope.data = {}
+  $scope.data.name = 'Hottt Tracks'
+  PlaylistService.hottt().then (response) ->
+    spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(response.data)
+    $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)
 
 
-app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataModel, PlaylistService) ->
+app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, PlaylistService, SpotifyService) ->
   window.TOPTRACKS = $scope
-  $scope.data = DataModel.data
-  PlaylistService.topTracks().then (data) ->
-    $scope.data.spotify_ids = data.data
-    $scope.data.spotify_embed_url = "https://embed.spotify.com/?uri=spotify:trackset:" + $scope.data.name + ':' + $scope.data.spotify_ids
-    $scope.data.spotify_embed_url = $sce.trustAsResourceUrl($scope.data.spotify_embed_url)
+  $scope.data = {}
+  $scope.data.name = 'Top Tracks' # fixme: ... for DATE RANGE'
+  PlaylistService.topTracks().then (response) ->
+    spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(response.data)
+    $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)
