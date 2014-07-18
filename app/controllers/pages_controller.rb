@@ -1,11 +1,6 @@
 class PagesController < ApplicationController
   def home
-    render '/api/playlists/playlist'
-  end
-
-  def playlist
-    @spotify_uris = PlaylistService.new.spotify_playlist_from_tracks
-    render :playlist
+    redirect_to playlist_path
   end
 
   def taste_last_week

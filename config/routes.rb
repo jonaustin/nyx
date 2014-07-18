@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     resource :playlist, only: [] do
-      get :playlist, defaults: {format: :html}
       get :hottt
       get :top_tracks
     end
@@ -13,6 +12,7 @@ Rails.application.routes.draw do
     end
     get '/playlists/:path.html' => 'playlists#template', :constraints => { :path => /.+/  }, defaults: {format: :html}
   end
+  get 'playlist' => 'playlists#playlist'
 
   root 'pages#home'
   get 'pages/:action' => 'pages'

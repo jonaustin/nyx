@@ -48,9 +48,6 @@ class Api::PlaylistsController < Api::BaseController
 
   end
 
-  def playlist
-  end
-
   # $routeProvider.when '/something', templateUrl: '/api/playlists/something.html', controller: 'SomethingController'
   def template
     render :template => 'api/playlists/' + params[:path], :layout => nil
