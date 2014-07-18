@@ -2,15 +2,15 @@
 #= require angular-resource
 #= require angular-route
 #= require angular-loading-bar
-#= require angular-ui-bootstrap-bower
-# require angular-ui-select2/select2
+#= require angular-strap/angular-strap.js
+#= require angular-strap/angular-strap.tpl.js
 
 app = angular.module("playlistApp",
                     [
                      'angular-loading-bar'
                      'ngResource'
                      'ngRoute'
-                     'ui.bootstrap'
+                     'mgcrea.ngStrap'
                     ])
 
 app.config ($httpProvider) ->

@@ -31,7 +31,8 @@ gem 'rails-assets-angular-route'
 gem 'rails-assets-angular-resource'
 gem 'rails-assets-angular-ui-bootstrap-bower'
 gem 'rails-assets-lodash',             '~> 2.4'
-gem 'rails-assets-angular-ui-select2', '~> 0.0.5'
+gem 'rails-assets-angular-strap'
+gem 'rails-assets-bootstrap-additions' # css additions for angular-strap
 
 group :production do
   gem 'rails_12factor'
