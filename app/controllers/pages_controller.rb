@@ -8,18 +8,6 @@ class PagesController < ApplicationController
     render :playlist
   end
 
-  def top_tracks
-    params[:user]   ||= current_user.lastfm_username
-    params[:start]  ||= 0 
-    params[:limit]  ||= 90 
-    params[:period] ||= '7day'
-    lastfm_tracks = Lfm.new.top_tracks(echonest_params)
-    playlist = PlaylistService.new
-    tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
-    @spotify_uris = playlist.spotify_playlist_from_tracks(tracks_hash)
-    render :playlist
-  end
-
   def taste_last_week
     # dry
     user = params[:user] || current_user.lastfm_username

@@ -31,7 +31,7 @@ app.config ($routeProvider, $locationProvider) ->
           })
     .when('/top-tracks',
           {
-            templateUrl: '/api/playlists/playlist_embed.html',
+            templateUrl: '/api/playlists/top_tracks.html',
             controller: 'TopTracksPlaylistController'
           })
     .otherwise({
@@ -42,7 +42,6 @@ app.factory "Playlist", ($resource) ->
   $resource('/api/playlists/:id.json', {id: '@id'})
 
 app.factory "PlaylistService", ($http) ->
-  {
     hottt: ->
       $http.get('/api/playlist/hottt')
         .success (response) ->
@@ -51,7 +50,6 @@ app.factory "PlaylistService", ($http) ->
       $http.get('/api/playlist/top_tracks') #FIXME send params (routeParams?)
         .success (response) ->
           response.data
-  }
 
 app.factory "SpotifyService", ->
   {
@@ -60,6 +58,21 @@ app.factory "SpotifyService", ->
       baseUrl + playlistName + ':' + spotifyIds
   }
 
+app.factory "DataModel", ->
+  {
+    data: {
+      lastfmUsername: 'echowarpt' #fixme, get from rails
+      periods: [
+        {name: 'last week', period: '7day'}
+        {name: 'last month', period: '1month'}
+        {name: 'last 3 months', period: '3month'}
+        {name: 'last 6 months', period: '6month'}
+        {name: 'last 12 months', period: '12month'}
+      ]
+    }
+  }
+
+
 app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, PlaylistService, SpotifyService) ->
   window.HOTTT = $scope
   $scope.data = {}
@@ -67,12 +80,23 @@ app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, PlaylistS
   PlaylistService.hottt().then (response) ->
     spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(response.data)
     $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)
+    $scope.data.templateUrl = '/api/playlists/top_tracks.html'
 
 
-app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, PlaylistService, SpotifyService) ->
+app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataModel, PlaylistService, SpotifyService) ->
   window.TOPTRACKS = $scope
-  $scope.data = {}
+  $scope.data = DataModel.data
   $scope.data.name = 'Top Tracks' # fixme: ... for DATE RANGE'
+  $scope.data.templateUrl = '/api/playlists/playlist_embed.html'
   PlaylistService.topTracks().then (response) ->
     spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(response.data)
     $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)
+
+  $scope.submit = (form) ->
+    # Trigger validation flag.
+    $scope.submitted = true
+
+    # If form is invalid, return and let AngularJS show validation errors.
+    return unless form.$valid
+
+    # ....

@@ -1,0 +1,44 @@
+.form.text-center
+  -#%form.form-inline{name: "datepickerForm", role: "form"}
+  %form{name: 'topTracksForm', role: 'form', novalidate: true}
+    / Basic example
+    .form-group{"ng-class" => "{'has-error': datepickerForm.date.$invalid}"}
+      %label.control-label
+        %i.fa.fa-calendar
+        Date
+        %small (as date)
+      %input.form-control{"bs-datepicker" => "", name: "date", "ng-model" => "selectedDate", type: "text"}/
+    / Custom example
+    .form-group{"ng-class" => "{'has-error': datepickerForm.date2.$invalid}"}
+      %label.control-label
+        %i.fa.fa-calendar
+        Date
+        %small (as number)
+      %input.form-control{"bs-datepicker" => "", "data-autoclose" => "1", "data-date-format" => "yyyy-MM-dd", "data-date-type" => "number", "data-max-date" => "today", "data-min-date" => "02/10/86", name: "date2", "ng-model" => "selectedDateAsNumber", type: "text"}/
+    %hr/
+    / Date range example
+    .form-group
+      %label.control-label
+        %i.fa.fa-calendar
+        %i.fa.fa-arrows-h
+        %i.fa.fa-calendar
+        Date range
+        %small (dynamic)
+      %br/
+      .form-group
+        %input.form-control{"bs-datepicker" => "", "data-max-date" => "", "ng-model" => "fromDate", placeholder: "From", type: "text"}/
+      .form-group
+        %input.form-control{"bs-datepicker" => "", "data-min-date" => "", "ng-model" => "untilDate", placeholder: "Until", type: "text"}
+    .form-group
+      %span.label.label-danger{ng_show: 'submitted && topTracksForm.$error.email'} Invalid email
+      %input(type="email" name="email" data-ng-model="email" class="form-control" required) 
+
+    .form-group
+      %span.label.label-danger{ng_show: 'submitted && helpForm.$error.email'} Invalid username
+      %input{class: 'form-control', placeholder: 'username', value: '{{data.lastfmUsername}}', ng_model: 'data.lastfmUsername'}
+    .form-group
+      %select{ng_model: "data.period", ng_options: "period.name for period in data.periods"}
+    .pull-left
+      %button.btn.btn-default{type: "submit", ng_click: 'submit(topTracksForm)'} Refresh
+
+  %div{ng_include: 'data.templateUrl'}
