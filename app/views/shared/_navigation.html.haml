@@ -1,4 +1,4 @@
-%nav.navbar.navbar-default.navbar-fixed-top.navbar-inverse{role:'navigation'}
+%nav.navbar.navbar-default.navbar-fixed-top.navbar-inverse{role:'navigation', bs_navbar:true}
   .container
     .navbar-header
       %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
@@ -11,9 +11,9 @@
       %ul.nav.navbar-nav
         %li{class: "#{controller_name == 'pages' && action_name == 'home' ? 'active' : ''}"}
           = link_to 'Home', root_path
-        %li{class: "#{controller_name == 'pages' && action_name == 'hottt' ? 'active' : ''}"}
+        %li(data-match-route="/hottt")
           = link_to 'Hottt', '#/hottt'
-        %li{class: "#{controller_name == 'pages' && action_name == 'top_tracks' ? 'active' : ''}"}
+        %li(data-match-route="/top-tracks")
           = link_to 'Top Tracks', '#/top-tracks'
       %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?

@@ -1,4 +1,4 @@
-.form.text-center
+.form
   -#%form.form-inline{name: "datepickerForm", role: "form"}
   %form{name: 'topTracksForm', role: 'form', novalidate: true}
     .form-group
@@ -9,18 +9,15 @@
         Select a date range
       %br/
       .form-group
-        %input.form-control{"bs-datepicker" => "", "data-max-date" => "", "ng-model" => "fromDate", placeholder: "From", type: "text"}/
+        %input.form-control(bs-datepicker data-max-date ng-model='fromDate' placeholder='From' type='text')
       .form-group
-        %input.form-control{"bs-datepicker" => "", "data-min-date" => "", "ng-model" => "untilDate", placeholder: "Until", type: "text"}
-    .form-group
-      %span.label.label-danger{ng_show: 'submitted && topTracksForm.$error.email'} Invalid email
-      %input(type="email" name="email" data-ng-model="email" class="form-control" required) 
+        %input.form-control(bs-datepicker data-min-date ng-model='untilDate' placeholder='Until' type='text')
 
     .form-group
       %span.label.label-danger{ng_show: 'submitted && helpForm.$error.email'} Invalid username
       %input{class: 'form-control', placeholder: 'username', value: '{{data.lastfmUsername}}', ng_model: 'data.lastfmUsername'}
     .form-group
-      %select{ng_model: "data.period", ng_options: "period.name for period in data.periods"}
+      %select{ng_model: 'data.period', ng_options: 'period.name for period in data.periods'}
     .pull-left
       %button.btn.btn-default{type: "submit", ng_click: 'submit(topTracksForm)'} Refresh
 
