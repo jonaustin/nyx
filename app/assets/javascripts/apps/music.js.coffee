@@ -46,8 +46,12 @@ app.factory "PlaylistService", ($http) ->
       $http.get('/api/playlist/hottt')
         .success (response) ->
           response.data
-    topTracks: ->
-      $http.get('/api/playlist/top_tracks') #FIXME send params (routeParams?)
+    topTracks: (options) ->
+      console.log(options)
+      url = '/api/playlist/top_tracks?'
+      _.forIn options, (value, key) ->
+        url += "&" + key + "=" + value
+      $http.get(url) #FIXME send params (routeParams?)
         .success (response) ->
           response.data
 
@@ -88,7 +92,9 @@ app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataM
   $scope.data = DataModel.data
   $scope.data.name = 'Top Tracks' # fixme: ... for DATE RANGE'
   $scope.data.templateUrl = '/api/playlists/playlist_embed.html'
-  PlaylistService.topTracks().then (response) ->
+
+  console.log($routeParams)
+  PlaylistService.topTracks($routeParams).then (response) ->
     spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(response.data)
     $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)
 

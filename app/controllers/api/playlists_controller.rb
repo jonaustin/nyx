@@ -62,7 +62,7 @@ class Api::PlaylistsController < Api::BaseController
 
     # Only allow a trusted parameter "white list" through.
     def playlist_params
-      params.require(:playlist).permit(:name, :user_id)
+      params.require(:playlist).permit(:name, :user_id, :period, :start_date, :end_date)
     end
 
     def echonest_params
