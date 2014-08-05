@@ -1,2 +1,2 @@
 .text-center{ng_if: 'data.spotifyEmbedUrl'}
-  %iframe{ id: 'spotify-playlist', allowtransparency: 'true', frameborder: '0', width: '500', height: '500', src: "{{data.spotifyEmbedUrl}}" }
+  %div{ja_spotify_embed: true, data: 'data'}

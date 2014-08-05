@@ -1,5 +1,5 @@
 .form
-  -#%form.form-inline{name: "datepickerForm", role: "form"}
+  {{data | json}}
   %form{name: 'topTracksForm', role: 'form', novalidate: true}
     .form-group
       %label.control-label
@@ -14,11 +14,11 @@
         %input.form-control(bs-datepicker data-min-date ng-model='untilDate' placeholder='Until' type='text')
 
     .form-group
-      %span.label.label-danger{ng_show: 'submitted && helpForm.$error.email'} Invalid username
+      %span.label.label-danger{ng_show: 'topTracksForm.$error.username'} Invalid username
       %input{class: 'form-control', placeholder: 'username', value: '{{data.lastfmUsername}}', ng_model: 'data.lastfmUsername'}
     .form-group
       %select{ng_model: 'data.period', ng_options: 'period.name for period in data.periods'}
     .pull-left
-      %button.btn.btn-default{type: "submit", ng_click: 'submit(topTracksForm)'} Refresh
+      %button.btn.btn-default{type: 'submit', ng_click: 'submit(topTracksForm)'} Refresh
 
   %div{ng_include: 'data.templateUrl'}

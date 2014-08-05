@@ -63,7 +63,7 @@ app.factory "SpotifyService", ->
   }
 
 app.factory "DataModel", ->
-  {
+  data = {
     data: {
       lastfmUsername: 'echowarpt' #fixme, get from rails
       periods: [
@@ -75,6 +75,25 @@ app.factory "DataModel", ->
       ]
     }
   }
+  data.data.period = data.data.periods[0]
+  data
+
+app.directive 'jaSpotifyEmbed', ->
+  link = (scope, element, attrs) ->
+
+  template =
+    """
+    <iframe id='spotify-playlist' allowtransparency='true' frameborder='0' width='500' height='500' src="{{data.spotifyEmbedUrl}}" }></iframe>
+    """
+
+  {
+    scope:
+      data: '='
+    template: template
+    link: link
+  }
+
+  
 
 
 app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, PlaylistService, SpotifyService) ->
@@ -90,19 +109,25 @@ app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, PlaylistS
 app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataModel, PlaylistService, SpotifyService) ->
   window.TOPTRACKS = $scope
   $scope.data = DataModel.data
+  $scope.master = $scope.data
   $scope.data.name = 'Top Tracks' # fixme: ... for DATE RANGE'
   $scope.data.templateUrl = '/api/playlists/playlist_embed.html'
 
-  console.log($routeParams)
-  PlaylistService.topTracks($routeParams).then (response) ->
-    spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(response.data)
-    $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)
+  $scope.getTopTracks = (options) ->
+    debugger
+    PlaylistService.topTracks(options).then (promise) ->
+      spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(promise.data)
+      $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)
+  $scope.getTopTracks($routeParams)
 
   $scope.submit = (form) ->
-    # Trigger validation flag.
     $scope.submitted = true
 
     # If form is invalid, return and let AngularJS show validation errors.
     return unless form.$valid
+    
+    # do other stuff if valid
+    $scope.getTopTracks({period: $scope.data.period.period})
 
-    # ....
+  $scope.reset = ->
+    $scope.data = $scope.master
