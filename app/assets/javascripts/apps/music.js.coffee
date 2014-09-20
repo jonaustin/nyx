@@ -75,6 +75,8 @@ app.factory "DataModel", ->
       ]
     }
   }
+  #@data.period = data.data.periods[0]
+  #{ data }
   data.data.period = data.data.periods[0]
   data
 
@@ -126,7 +128,7 @@ app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataM
     return unless form.$valid
     
     # do other stuff if valid
-    $scope.getTopTracks({period: $scope.data.period.period})
+    $scope.getTopTracks({period: $scope.data.period.period, user: $scope.data.lastfmUsername})
 
   $scope.reset = ->
     $scope.data = $scope.master

@@ -1,24 +1,36 @@
-.form
-  {{data | json}}
-  %form{name: 'topTracksForm', role: 'form', novalidate: true}
-    .form-group
-      %label.control-label
-        %i.fa.fa-calendar
-        %i.fa.fa-arrows-h
-        %i.fa.fa-calendar
-        Select a date range
-      %br/
-      .form-group
-        %input.form-control(bs-datepicker data-max-date ng-model='fromDate' placeholder='From' type='text')
-      .form-group
-        %input.form-control(bs-datepicker data-min-date ng-model='untilDate' placeholder='Until' type='text')
+%h1 User Top Tracks
+-#{{data | json}}
+.col-md-6
+  .panel.panel-default.form-horizontal(role='form')
+    .panel-heading Fetch Playlist
+    .panel-body
+      %form{name: 'topTracksForm', role: 'form', novalidate: true}
+        .form-group
+          %label.control-label.col-md-4(for='username') Username
+          .col-md-7
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-user
+              %input.form-control(placeholder='username' value='{{data.lastfmUsername}}' ng-model='data.lastfmUsername' name='username')
+            -#%span.label.label-danger{ng_show: 'topTracksForm.$error.username'} Invalid username
 
-    .form-group
-      %span.label.label-danger{ng_show: 'topTracksForm.$error.username'} Invalid username
-      %input{class: 'form-control', placeholder: 'username', value: '{{data.lastfmUsername}}', ng_model: 'data.lastfmUsername'}
-    .form-group
-      %select{ng_model: 'data.period', ng_options: 'period.name for period in data.periods'}
-    .pull-left
-      %button.btn.btn-default{type: 'submit', ng_click: 'submit(topTracksForm)'} Refresh
+        .form-group
+          %label.control-label.col-md-4(for='dateRange') Date Range
+          .col-md-7
+            %select.form-control{ng_model: 'data.period', ng_options: 'period.name for period in data.periods'}
 
+        -#.form-group
+          %label.control-label.col-md-4(for='from') From
+          .col-md-7
+            %input.form-control(ng-model='fromDate' placeholder='From' type='date' name='fromDate')
+        -#.form-group
+          %label.control-label.col-md-4(for='to') To
+          .col-md-7
+            %input.form-control(ng-model='toDate' placeholder='to' type='date' name='toDate')
+
+        .form-group
+          .col-md-offset-4.col-md-8
+            %button.btn.btn-primary{type: 'submit', ng_click: 'submit(topTracksForm)'} Create Playlist
+.col-md-1
+.col-md-5
   %div{ng_include: 'data.templateUrl'}
