@@ -114,7 +114,6 @@ app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataM
   $scope.data.templateUrl = '/api/playlists/playlist_embed.html'
 
   $scope.getTopTracks = (options) ->
-    debugger
     PlaylistService.topTracks(options).then (promise) ->
       spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(promise.data)
       $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)

@@ -36,7 +36,7 @@ class Api::PlaylistsController < Api::BaseController
   end
 
   def top_tracks
-    params[:user]   ||= current_user.lastfm_username
+    params[:user]   ||= default_user
     params[:start]  ||= 0 
     params[:limit]  ||= 90 
     params[:period] ||= '7day'
@@ -67,5 +67,9 @@ class Api::PlaylistsController < Api::BaseController
 
     def echonest_params
       params.permit(:user, :start, :limit, :period)
+    end
+
+    def default_user
+      current_user ? current_user.lastfm_username : 'echowarpt'
     end
 end
