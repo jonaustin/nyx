@@ -132,3 +132,36 @@ app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataM
 
   $scope.reset = ->
     $scope.data = $scope.master
+
+app.directive 'userExistsValidator', ($http, $log) ->
+    require : 'ngModel',
+    link : (scope, element, attrs, ngModel) ->
+      apiUrl = 'http://ws.audioscrobbler.com/2.0/?method=user.getinfo&api_key=2a6752a4d76f63b1d371ee58af5b1eb7&format=json'
+
+      setAsLoading = (bool) ->
+        ngModel.$setValidity('userLoading', !bool)
+
+      setAsAvailable = (bool) ->
+        ngModel.$setValidity('userAvailable', bool)
+
+      ngModel.$parsers.push (value) ->
+        return if !value || value.length == 0
+
+        setAsLoading(true)
+        setAsAvailable(false)
+
+        $http.get apiUrl, { params: { user : value } }
+          .success( (response) ->
+            $log.log('success:', response)
+            if response.error
+              setAsLoading(false)
+              setAsAvailable(false)
+            else
+              setAsLoading(false)
+              setAsAvailable(true)
+          )
+          .error( (response) ->
+            $log.log('error:', response)
+          )
+
+        value

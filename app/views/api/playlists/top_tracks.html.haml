@@ -11,7 +11,13 @@
             .input-group
               %span.input-group-addon
                 %i.fa.fa-user
-              %input.form-control(placeholder='username' value='{{data.lastfmUsername}}' ng-model='data.lastfmUsername' name='username')
+              %input.form-control(user-exists-validator
+                placeholder='username' 
+                value='{{data.lastfmUsername}}' 
+                ng-model='data.lastfmUsername' 
+                name='username')
+            %div.error(ng-if='topTracksForm.username.$error')
+              That user does not exist.
             -#%span.label.label-danger{ng_show: 'topTracksForm.$error.username'} Invalid username
 
         .form-group
