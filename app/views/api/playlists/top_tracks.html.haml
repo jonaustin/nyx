@@ -8,7 +8,7 @@
         .form-group
           %label.control-label.col-md-4(for='username') Username
           .col-md-7
-            .input-group(ng-class="{'has-success': topTracksForm.username.$valid, 'has-error': topTracksForm.username.$invalid}")
+            .input-group(ng-class="{'has-success': topTracksForm.username.$valid && topTracksForm.$dirty, 'has-error': topTracksForm.username.$invalid}")
               %span.input-group-addon
                 %i.fa.fa-user
               %input.form-control(user-exists-validator
