@@ -8,7 +8,7 @@
         .form-group
           %label.control-label.col-md-4(for='username') Username
           .col-md-7
-            .input-group
+            .input-group(ng-class="{'has-success': topTracksForm.username.$valid, 'has-error': topTracksForm.username.$invalid}")
               %span.input-group-addon
                 %i.fa.fa-user
               %input.form-control(user-exists-validator
@@ -16,8 +16,10 @@
                 value='{{data.lastfmUsername}}' 
                 ng-model='data.lastfmUsername' 
                 name='username')
-            %div.error(ng-if='topTracksForm.username.$error')
-              That user does not exist.
+            %div(ng-messages='topTracksForm.username.$error')
+              %div(ng-message='userLoading') Looking for user..
+              %div(ng-message='userAvailable') User not found..
+
             -#%span.label.label-danger{ng_show: 'topTracksForm.$error.username'} Invalid username
 
         .form-group
