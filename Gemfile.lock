@@ -228,6 +228,8 @@ GEM
     rails-assets-angular-animate (1.3.0)
       rails-assets-angular (= 1.3.0)
     rails-assets-angular-loading-bar (0.4.3)
+    rails-assets-angular-messages (1.3.0)
+      rails-assets-angular (= 1.3.0)
     rails-assets-angular-motion (0.3.4)
       rails-assets-angular (>= 1.2, < 2)
       rails-assets-angular-animate (>= 1.2, < 2)
@@ -380,10 +382,11 @@ DEPENDENCIES
   rails (= 4.1.4)
   rails-assets-angular (= 1.3.0)
   rails-assets-angular-loading-bar
-  rails-assets-angular-motion (= 0.3.4)
+  rails-assets-angular-messages
+  rails-assets-angular-motion
   rails-assets-angular-resource
   rails-assets-angular-route
-  rails-assets-angular-strap (= 2.1.1)
+  rails-assets-angular-strap
   rails-assets-angular-ui-bootstrap-bower
   rails-assets-bootstrap-additions
   rails-assets-lodash (~> 2.4)

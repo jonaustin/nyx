@@ -27,13 +27,14 @@ gem 'peek-pg'
 
 gem 'ngannotate-rails'
 gem 'rails-assets-angular', '= 1.3.0'
+gem 'rails-assets-angular-messages'
 gem 'rails-assets-angular-loading-bar'
 gem 'rails-assets-angular-route'
 gem 'rails-assets-angular-resource'
 gem 'rails-assets-angular-ui-bootstrap-bower'
 gem 'rails-assets-lodash',             '~> 2.4'
-gem 'rails-assets-angular-strap', '= 2.1.1'
-gem 'rails-assets-angular-motion', '= 0.3.4'
+gem 'rails-assets-angular-strap'
+gem 'rails-assets-angular-motion'
 gem 'rails-assets-bootstrap-additions' # css additions for angular-strap
 
 group :production do

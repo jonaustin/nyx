@@ -2,6 +2,7 @@
 #= require angular-resource
 #= require angular-route
 #= require angular-loading-bar
+#= require angular-messages
 #= require angular-strap/angular-strap.js
 #= require angular-strap/angular-strap.tpl.js
 
@@ -10,6 +11,7 @@ app = angular.module("musicApp",
                      'angular-loading-bar'
                      'ngResource'
                      'ngRoute'
+                     'ngMessages'
                      'mgcrea.ngStrap'
                     ])
 
