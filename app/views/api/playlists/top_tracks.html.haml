@@ -4,7 +4,9 @@
   .panel.panel-default.form-horizontal(role='form')
     .panel-heading Fetch Playlist
     .panel-body
-      %form{name: 'topTracksForm', role: 'form', novalidate: true}
+      %form(name='topTracksForm'
+        role='form'
+        ng-submit='submit(topTracksForm)')
         .form-group
           %label.control-label.col-md-4(for='username') Username
           .col-md-7
@@ -18,8 +20,8 @@
                 ng-model-options="{updateOn: 'blur'}"
                 name='username')
             %div(ng-messages='topTracksForm.username.$error')
-              %div(ng-message='userLoading') Looking for user..
-              %div(ng-message='userAvailable') User not found..
+              %div(ng-message='userLoading') Looking for last.fm user...
+              %div(ng-message='userAvailable') No last.fm user found
 
             -#%span.label.label-danger{ng_show: 'topTracksForm.$error.username'} Invalid username
 
@@ -39,7 +41,8 @@
 
         .form-group
           .col-md-offset-4.col-md-8
-            %button.btn.btn-primary{type: 'submit', ng_click: 'submit(topTracksForm)'} Create Playlist
+            %button.btn.btn-primary(type='submit'
+              ng-disabled='topTracksForm.$invalid') Create Playlist
 .col-md-1
 .col-md-5
   %div{ng_include: 'data.templateUrl'}
