@@ -15,6 +15,7 @@
                 placeholder='username' 
                 value='{{data.lastfmUsername}}' 
                 ng-model='data.lastfmUsername' 
+                ng-model-options="{updateOn: 'blur'}"
                 name='username')
             %div(ng-messages='topTracksForm.username.$error')
               %div(ng-message='userLoading') Looking for user..
