@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :tracks, only: [:index, :create, :update, :destroy]
     end
     get '/playlists/:path.html' => 'playlists#template', :constraints => { :path => /.+/  }, defaults: {format: :html}
+
+    get '/lastfm/user' => 'lastfm#user'
   end
   get 'playlist' => 'playlists#playlist'
 

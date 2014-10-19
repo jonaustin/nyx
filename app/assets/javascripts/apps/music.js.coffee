@@ -44,25 +44,27 @@ app.factory "Playlist", ($resource) ->
   $resource('/api/playlists/:id.json', {id: '@id'})
 
 app.factory "PlaylistService", ($http) ->
-    hottt: ->
-      $http.get('/api/playlist/hottt')
-        .success (response) ->
-          response.data
-    topTracks: (options) ->
-      console.log(options)
-      url = '/api/playlist/top_tracks?'
-      _.forIn options, (value, key) ->
-        url += "&" + key + "=" + value
-      $http.get(url) #FIXME send params (routeParams?)
-        .success (response) ->
-          response.data
+  hottt: ->
+    $http.get('/api/playlist/hottt')
+      .success (response) ->
+        response.data
+  topTracks: (options) ->
+    console.log(options)
+    url = '/api/playlist/top_tracks?'
+    _.forIn options, (value, key) ->
+      url += "&" + key + "=" + value
+    $http.get(url) #FIXME send params (routeParams?)
+      .success (response) ->
+        response.data
 
 app.factory "SpotifyService", ->
-  {
-    generateSpotifyEmbedUrl: (spotifyIds, playlistName) ->
-      baseUrl = "https://embed.spotify.com/?uri=spotify:trackset:"
-      baseUrl + playlistName + ':' + spotifyIds
-  }
+  generateSpotifyEmbedUrl: (spotifyIds, playlistName) ->
+    baseUrl = "https://embed.spotify.com/?uri=spotify:trackset:"
+    baseUrl + playlistName + ':' + spotifyIds
+
+app.factory "LastfmService", ($http) ->
+  getUserByUsername: (username) ->
+    $http.get '/api/lastfm/user', { params: { username: username } }
 
 app.factory "DataModel", ->
   data = {
@@ -81,24 +83,6 @@ app.factory "DataModel", ->
   #{ data }
   data.data.period = data.data.periods[0]
   data
-
-app.directive 'jaSpotifyEmbed', ->
-  link = (scope, element, attrs) ->
-
-  template =
-    """
-    <iframe id='spotify-playlist' allowtransparency='true' frameborder='0' width='500' height='500' src="{{data.spotifyEmbedUrl}}" }></iframe>
-    """
-
-  {
-    scope:
-      data: '='
-    template: template
-    link: link
-  }
-
-  
-
 
 app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, PlaylistService, SpotifyService) ->
   window.HOTTT = $scope
@@ -124,49 +108,36 @@ app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataM
   $scope.getTopTracks($routeParams)
 
   $scope.submit = (form) ->
-    $scope.submitted = true
-
     # If form is invalid, return and let AngularJS show validation errors.
     return unless form.$valid
     
-    # do other stuff if valid
+    # refresh the top tracks with given params
     $scope.getTopTracks({period: $scope.data.period.period, user: $scope.data.lastfmUsername})
 
   $scope.reset = ->
     $scope.data = $scope.master
 
-app.directive 'userExistsValidator', ($http, $log, $timeout) ->
-    require : 'ngModel',
-    link : (scope, element, attrs, ngModel) ->
-      apiUrl = 'http://ws.audioscrobbler.com/2.0/?method=user.getinfo&api_key=&format=json'
+app.directive 'userExistsValidator', ($q, LastfmService) ->
+  require : 'ngModel',
+  link : (scope, element, attrs, ngModel) ->
+    ngModel.$asyncValidators.usernameAvailable = (username) ->
+      deferred = $q.defer()
 
-      setAsLoading = (bool) ->
-        ngModel.$setValidity('userLoading', !bool)
+      LastfmService.getUserByUsername(username)
+        .then (response) ->
+          if response.data.error
+            deferred.reject()
+          else
+            deferred.resolve()
+        , (response) -> # http status == error status
+          deferred.reject()
 
-      setAsAvailable = (bool) ->
-        ngModel.$setValidity('userAvailable', bool)
+      deferred.promise
 
-      ngModel.$parsers.push (value) ->
-        return if !value || value.length == 0
-
-        setAsLoading(true)
-        setAsAvailable(false)
-
-        $timeout.cancel(timer)
-        timer = $timeout ->
-          $http.get apiUrl, { params: { user : value } }
-            .success( (response) ->
-              $log.log('success:', response)
-              if response.error
-                setAsLoading(false)
-                setAsAvailable(false)
-              else
-                setAsLoading(false)
-                setAsAvailable(true)
-            )
-            .error( (response) ->
-              $log.log('error:', response)
-            )
-        , 1500
-
-        value
+app.directive 'jaSpotifyEmbed', ->
+  scope:
+    spotifyEmbedUrl: '='
+  template:
+    """
+    <iframe id='spotify-playlist' allowtransparency='true' frameborder='0' width='500' height='500' src="{{spotifyEmbedUrl}}" }></iframe>
+    """

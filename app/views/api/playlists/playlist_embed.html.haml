@@ -1,2 +1,2 @@
-.text-center{ng_if: 'data.spotifyEmbedUrl'}
-  %div{ja_spotify_embed: true, data: 'data'}
+.text-center(ng-if='data.spotifyEmbedUrl')
+  %div(ja_spotify_embed spotify-embed-url='data.spotifyEmbedUrl')

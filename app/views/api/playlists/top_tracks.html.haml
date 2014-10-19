@@ -10,7 +10,7 @@
         .form-group
           %label.control-label.col-md-4(for='username') Username
           .col-md-7
-            .input-group(ng-class="{'has-success': topTracksForm.username.$valid && topTracksForm.$dirty, 'has-error': topTracksForm.username.$invalid}")
+            .input-group(ng-class="{'has-success': topTracksForm.username.$valid && topTracksForm.username.$dirty, 'has-error': topTracksForm.username.$invalid}")
               %span.input-group-addon
                 %i.fa.fa-user
               %input.form-control(user-exists-validator
@@ -19,25 +19,15 @@
                 ng-model='data.lastfmUsername' 
                 ng-model-options="{updateOn: 'blur'}"
                 name='username')
-            %div(ng-messages='topTracksForm.username.$error')
-              %div(ng-message='userLoading') Looking for last.fm user...
-              %div(ng-message='userAvailable') No last.fm user found
-
-            -#%span.label.label-danger{ng_show: 'topTracksForm.$error.username'} Invalid username
+            %div(ng-if='topTracksForm.username.$pending')
+              Looking for last.fm user...
+            %div(ng-if='topTracksForm.username.$invalid')
+              No last.fm user found
 
         .form-group
           %label.control-label.col-md-4(for='dateRange') Date Range
           .col-md-7
             %select.form-control{ng_model: 'data.period', ng_options: 'period.name for period in data.periods'}
-
-        -#.form-group
-          %label.control-label.col-md-4(for='from') From
-          .col-md-7
-            %input.form-control(ng-model='fromDate' placeholder='From' type='date' name='fromDate')
-        -#.form-group
-          %label.control-label.col-md-4(for='to') To
-          .col-md-7
-            %input.form-control(ng-model='toDate' placeholder='to' type='date' name='toDate')
 
         .form-group
           .col-md-offset-4.col-md-8
