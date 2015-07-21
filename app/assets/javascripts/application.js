@@ -18,4 +18,7 @@
 //= require bootstrap
 //= require peek
 //= require peek/views/performance_bar
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .

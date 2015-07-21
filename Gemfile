@@ -25,6 +25,10 @@ gem 'peek-pg'
 # causes issues with angularjs. For a fix see: https://shellycloud.com/blog/2013/10/how-to-integrate-angularjs-with-rails-4
 #gem 'turbolinks'              
 
+# react
+gem 'react-rails'
+
+# angular
 gem 'ngannotate-rails'
 gem 'rails-assets-angular', '= 1.3.0'
 gem 'rails-assets-angular-messages'
