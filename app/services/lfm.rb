@@ -22,4 +22,12 @@ class Lfm
       tracks.slice(options[:start].to_i, options[:limit].to_i)
     end
   end
+
+  def user(username)
+    begin
+      @lastfm.user.get_info(user: username)
+    rescue Lastfm::ApiError
+      {error: true}
+    end
+  end
 end

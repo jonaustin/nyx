@@ -1,5 +1,5 @@
 !!! 5
-%html(lang="en")
+%html(ng-app='musicApp' lang="en")
   %head
     %meta(charset="utf-8")
     %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
@@ -27,3 +27,4 @@
         %p
           &copy; Jon Austin
           = Date.today.year
+  = render 'peek/bar'

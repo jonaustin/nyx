@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
-ruby '2.1.1'
 
 gem 'rails',             '4.1.4'
 gem 'pg',                '~> 0.17'
@@ -9,25 +8,34 @@ gem 'uglifier',          '>= 2.5'
 gem 'coffee-rails',      '~> 4.0'
 gem 'jquery-rails',      '~> 3.1'
 gem 'haml-rails',        '~> 0.5'
-gem 'bootstrap-sass',    '~> 3.1'
+gem 'bootstrap-sass',    '~> 3.2'
+gem 'bootswatch-rails',  '~> 3.2'
 gem 'font-awesome-sass', '~> 4.1'
-gem 'draper',            '~> 1.3'
 gem 'devise',            '~> 3.2'
 gem 'therubyracer',      '~> 0.12', platforms: :ruby
 gem 'echowrap',          '~> 0.1'
 gem 'lastfm'
 gem 'unicorn'
 gem 'figaro'
+gem 'peek'
+gem 'peek-performance_bar'
+gem 'peek-git'
+gem 'peek-pg'
 
 # causes issues with angularjs. For a fix see: https://shellycloud.com/blog/2013/10/how-to-integrate-angularjs-with-rails-4
 #gem 'turbolinks'              
 
-gem 'ngmin-rails',                         '~> 0.4.0'
-gem 'rails-assets-lodash',                 '~> 2.4.1'
-#gem 'rails-assets-angular-local-storage',  '~> 0.0.4'
-gem 'angular_rails_csrf',                  '~> 1.0'
+gem 'ngannotate-rails'
+gem 'rails-assets-angular', '= 1.3.0'
+gem 'rails-assets-angular-messages'
 gem 'rails-assets-angular-loading-bar'
+gem 'rails-assets-angular-route'
 gem 'rails-assets-angular-resource'
+gem 'rails-assets-angular-ui-bootstrap-bower'
+gem 'rails-assets-lodash', '~> 2.4'
+gem 'rails-assets-angular-strap'
+gem 'rails-assets-angular-motion'
+gem 'rails-assets-bootstrap-additions' # css additions for angular-strap
 
 group :production do
   gem 'rails_12factor'

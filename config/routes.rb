@@ -1,6 +1,30 @@
 Rails.application.routes.draw do
+  #mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+  mount Peek::Railtie => '/peek'
+
+  namespace :api, defaults: {format: :json} do
+    resource :playlist, only: [] do
+      get :hottt
+      get :top_tracks
+    end
+    resources :playlists, only: [:index, :create, :update, :destroy] do
+      resources :tracks, only: [:index, :create, :update, :destroy]
+    end
+    get '/playlists/:path.html' => 'playlists#template', :constraints => { :path => /.+/  }, defaults: {format: :html}
+
+    get '/lastfm/user' => 'lastfm#user'
+  end
+  get 'playlist' => 'playlists#playlist'
+
   root 'pages#home'
   get 'pages/:action' => 'pages'
+
+  devise_for :users
+  # Singular user resources - no one may modify anyone else's profile
+  resource :user, only: [:update] do
+    get :profile
+    patch 'update_password'
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

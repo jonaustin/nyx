@@ -1,6 +1,6 @@
 require 'echowrap'
 
-class Playlist
+class PlaylistService
   def initialize
     @en = Echowrap
   end

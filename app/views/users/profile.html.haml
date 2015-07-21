@@ -1,0 +1,53 @@
+
+.authform
+  %h1 Profile
+  = form_for(@user, html: { role: 'form' }) do |f|
+    .form-group
+      %label{for: 'user_lastfm_username'} Lastfm Username:
+      = f.text_field :lastfm_username, class: 'form-control'
+    = f.submit 'Submit', class: 'button right'
+    .clearfix
+
+.authform
+  %h3 Update Account
+  = form_for(@user, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form'}) do |f|
+    = devise_error_messages!
+    .form-group
+      = f.label :email
+      = f.email_field :email, :autofocus => true, class: 'form-control'
+      - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+        %div
+          Currently waiting confirmation for: #{resource.unconfirmed_email}
+    %fieldset
+      %p Leave these fields blank if you don't want to change your password.
+      .form-group
+        = f.label :password
+        = f.password_field :password, :autocomplete => 'off', class: 'form-control'
+      .form-group
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: 'form-control'
+    %fieldset
+      %p You must enter your current password to make changes.
+      .form-group
+        = f.label :current_password
+        = f.password_field :current_password, class: 'form-control'
+    = f.submit 'Update', :class => 'button right'
+    .clearfix
+
+-#.authform
+  %h3 Cancel Account
+  %p Unhappy? We'll be sad to see you go.
+  = button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button right'
+
+  -#= form_for(@user, html: { role: 'form' }) do |f|
+    %h3 Change Password
+    = render partial: 'shared/error_messages', locals: { object: @user }
+    = devise_error_messages!
+    .form-group
+      %label{for: 'user_password'} New Password:
+      = f.password_field :password, class: 'form-control'
+    .form-group
+      %label{for: 'user_password_confirmation'} Confirm New Password:
+      = f.password_field :password_confirmation, class: 'form-control'
+    = f.submit 'Submit', class: 'button right'
+    .clearfix

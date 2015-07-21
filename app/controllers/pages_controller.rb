@@ -1,35 +1,13 @@
 class PagesController < ApplicationController
   def home
-    redirect_to '/pages/hottt'
-  end
-
-  def hottt
-    @spotify_uris = Playlist.new.hottt
-    render :playlist
-  end
-
-  def playlist
-    @spotify_uris = Playlist.new.spotify_playlist_from_tracks
-    render :playlist
-  end
-
-  def top_tracks
-    params[:user]   ||= 'echowarpt'
-    params[:start]  ||= 0 
-    params[:limit]  ||= 90 
-    params[:period] ||= '7day'
-    lastfm_tracks = Lfm.new.top_tracks(echonest_params)
-    playlist = Playlist.new
-    tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
-    @spotify_uris = playlist.spotify_playlist_from_tracks(tracks_hash)
-    render :playlist
+    redirect_to playlist_path
   end
 
   def taste_last_week
     # dry
-    user = params[:user] || 'echowarpt'
+    user = params[:user] || current_user.lastfm_username
     lastfm_tracks = Lastfm.new.top_weekly_tracks(user)
-    playlist = Playlist.new
+    playlist = PlaylistService.new
     tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
     taste_json = playlist.taste_data_from_tracks_hash(tracks_hash).to_json
 
