@@ -28,12 +28,12 @@ app.config ($routeProvider, $locationProvider) ->
           })
     .when('/hottt',
           {
-            templateUrl: '/api/playlists/playlist_embed.html',
+            templateUrl: '/api/v1/playlists/playlist_embed.html',
             controller: 'HotttPlaylistController'
           })
     .when('/top-tracks',
           {
-            templateUrl: '/api/playlists/top_tracks.html',
+            templateUrl: '/api/v1/playlists/top_tracks.html',
             controller: 'TopTracksPlaylistController'
           })
     .otherwise({
@@ -41,16 +41,16 @@ app.config ($routeProvider, $locationProvider) ->
     })
 
 app.factory "Playlist", ($resource) ->
-  $resource('/api/playlists/:id.json', {id: '@id'})
+  $resource('/api/v1/playlists/:id.json', {id: '@id'})
 
 app.factory "PlaylistService", ($http) ->
   hottt: ->
-    $http.get('/api/playlist/hottt')
+    $http.get('/api/v1/playlist/hottt')
       .success (response) ->
         response.data
   topTracks: (options) ->
     console.log(options)
-    url = '/api/playlist/top_tracks?'
+    url = '/api/v1/playlist/top_tracks?'
     _.forIn options, (value, key) ->
       url += "&" + key + "=" + value
     $http.get(url) #FIXME send params (routeParams?)
@@ -64,7 +64,7 @@ app.factory "SpotifyService", ->
 
 app.factory "LastfmService", ($http) ->
   getUserByUsername: (username) ->
-    $http.get '/api/lastfm/user', { params: { username: username } }
+    $http.get '/api/v1/lastfm/user', { params: { username: username } }
 
 app.factory "DataModel", ->
   data = {
@@ -91,7 +91,7 @@ app.controller "HotttPlaylistController", ($scope, $routeParams, $sce, PlaylistS
   PlaylistService.hottt().then (response) ->
     spotifyEmbedUrl = SpotifyService.generateSpotifyEmbedUrl(response.data)
     $scope.data.spotifyEmbedUrl = $sce.trustAsResourceUrl(spotifyEmbedUrl)
-    $scope.data.templateUrl = '/api/playlists/top_tracks.html'
+    $scope.data.templateUrl = '/api/v1/playlists/top_tracks.html'
 
 
 app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataModel, PlaylistService, SpotifyService) ->
@@ -99,7 +99,7 @@ app.controller "TopTracksPlaylistController", ($scope, $routeParams, $sce, DataM
   $scope.data = DataModel.data
   $scope.master = $scope.data
   $scope.data.name = 'Top Tracks' # fixme: ... for DATE RANGE'
-  $scope.data.templateUrl = '/api/playlists/playlist_embed.html'
+  $scope.data.templateUrl = '/api/v1/playlists/playlist_embed.html'
 
   $scope.getTopTracks = (options) ->
     PlaylistService.topTracks(options).then (promise) ->

@@ -1,4 +1,4 @@
-class Api::LastfmController < Api::BaseController
+class Api::V1::LastfmController < Api::BaseController
   before_action :set_lastfm
 
   def user

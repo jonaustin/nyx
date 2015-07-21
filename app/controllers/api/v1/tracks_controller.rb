@@ -1,4 +1,4 @@
-class Api::TracksController < Api::BaseController
+class Api::V1::TracksController < Api::BaseController
   before_action :set_track, only: [:show, :edit, :update, :destroy]
   respond_to :json
 

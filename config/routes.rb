@@ -1,19 +1,21 @@
 Rails.application.routes.draw do
-  #mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   mount Peek::Railtie => '/peek'
 
   namespace :api, defaults: {format: :json} do
-    resource :playlist, only: [] do
-      get :hottt
-      get :top_tracks
-    end
-    resources :playlists, only: [:index, :create, :update, :destroy] do
-      resources :tracks, only: [:index, :create, :update, :destroy]
-    end
-    get '/playlists/:path.html' => 'playlists#template', :constraints => { :path => /.+/  }, defaults: {format: :html}
+    namespace :v1, defaults: {format: :json} do
+      resource :playlist, only: [] do
+        get :hottt
+        get :top_tracks
+      end
+      resources :playlists, only: [:index, :create, :update, :destroy] do
+        resources :tracks, only: [:index, :create, :update, :destroy]
+      end
+      get '/playlists/:path.html' => 'playlists#template', :constraints => { :path => /.+/  }, defaults: {format: :html}
 
-    get '/lastfm/user' => 'lastfm#user'
+      get '/lastfm/user' => 'lastfm#user'
+    end
   end
+
   get 'playlist' => 'playlists#playlist'
 
   root 'pages#home'

@@ -1,4 +1,4 @@
-class Api::PlaylistsController < Api::BaseController
+class Api::V1::PlaylistsController < Api::BaseController
   before_action :set_playlist, only: [:show, :edit, :update, :destroy]
   respond_to :json, except: [:playlist, :template]
   respond_to :html, only:   [:playlist, :template]
@@ -50,7 +50,7 @@ class Api::PlaylistsController < Api::BaseController
 
   # $routeProvider.when '/something', templateUrl: '/api/playlists/something.html', controller: 'SomethingController'
   def template
-    render :template => 'api/playlists/' + params[:path], :layout => nil
+    render :template => 'api/v1/playlists/' + params[:path], :layout => nil
   end
   
 
