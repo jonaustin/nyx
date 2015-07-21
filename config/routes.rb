@@ -14,6 +14,19 @@ Rails.application.routes.draw do
 
       get '/lastfm/user' => 'lastfm#user'
     end
+
+    namespace :v2, defaults: {format: :json} do
+      resource :playlist, only: [] do
+        get :hottt
+        get :top_tracks
+      end
+      resources :playlists, only: [:index, :create, :update, :destroy] do
+        resources :tracks, only: [:index, :create, :update, :destroy]
+      end
+      get '/playlists/:path.html' => 'playlists#template', :constraints => { :path => /.+/  }, defaults: {format: :html}
+
+      get '/lastfm/user' => 'lastfm#user'
+    end
   end
 
   get 'playlist' => 'playlists#playlist'
