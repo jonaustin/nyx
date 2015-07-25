@@ -29,7 +29,12 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'playlist' => 'playlists#playlist'
+  get 'playlist'  => 'playlists#playlist'
+  get 'hottt'     => 'playlists#hottt'
+  get 'scrobbles' => 'playlists#top_tracks'
+  get 'top'       => 'playlists#top_tracks'
+  get 'top_tracks'       => 'playlists#top_tracks'
+  get 'top-tracks'       => 'playlists#top_tracks'
 
   root 'pages#home'
   get 'pages/:action' => 'pages'

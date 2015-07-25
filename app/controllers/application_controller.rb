@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     playlist_path
   end
+
+  def default_user
+    current_user ? current_user.lastfm_username : 'echowarpt'
+  end
 end

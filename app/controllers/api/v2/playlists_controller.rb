@@ -68,8 +68,4 @@ class Api::V2::PlaylistsController < Api::BaseController
     def echonest_params
       params.permit(:user, :start, :limit, :period)
     end
-
-    def default_user
-      current_user ? current_user.lastfm_username : 'echowarpt'
-    end
 end

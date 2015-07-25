@@ -12,9 +12,9 @@
         %li{class: "#{controller_name == 'pages' && action_name == 'home' ? 'active' : ''}"}
           = link_to 'Home', root_path
         %li(data-match-route="/hottt")
-          = link_to 'Hottt', '#/hottt'
-        %li(data-match-route="/top-tracks")
-          = link_to 'Top Tracks', '#/top-tracks'
+          = link_to 'Hottt', '/hottt'
+        %li(data-match-route="/top_tracks")
+          = link_to 'Top Tracks', '/top_tracks'
       %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
           %li= link_to 'Profile', profile_user_path

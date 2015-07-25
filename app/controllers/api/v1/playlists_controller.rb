@@ -45,7 +45,6 @@ class Api::V1::PlaylistsController < Api::BaseController
     tracks_hash = playlist.last_fm_tracks_to_hash(lastfm_tracks)
     spotify_uris = playlist.spotify_playlist_from_tracks(tracks_hash)
     respond_with spotify_uris
-
   end
 
   # $routeProvider.when '/something', templateUrl: '/api/playlists/something.html', controller: 'SomethingController'
