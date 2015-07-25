@@ -5,13 +5,6 @@ window.PlayList = React.createClass({
         };
     },
 
-    handleUserInput: function(filterText, inStockOnly) {
-        this.setState({
-            filterText: filterText,
-            inStockOnly: inStockOnly
-        });
-    },
-
     render: function() {
         return (
             <div>
